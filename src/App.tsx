@@ -8,13 +8,17 @@ function App() {
   const [showAlert, setShowAlert] = useState(false);
   const [cartItems, setCartItems] = useState<string[]>([]);
 
+  const [alertMessage, setAlertMessage] = useState("");
+
   const handleAddToCart = (productId: string) => {
     setCartItems([...cartItems, productId]);
+    setAlertMessage("Item added to cart");
     setShowAlert(true);
   };
 
   const handleEditClick = (userId: string) => {
     console.log("Editing user:", userId);
+    setAlertMessage("Profile updated successfully!")
     setShowAlert(true);
   };
   const user = {
@@ -40,7 +44,7 @@ function App() {
       {showAlert && (
         <AlertBox
           type="success"
-          message="Your profile has been updated successfully!"
+          message={alertMessage}
           onClose={() => setShowAlert(false)}
         >
           <p className="text-sm">You can now continue using the application.</p>
@@ -59,7 +63,7 @@ function App() {
         product={product}
         showDescription={true}
         showStockStatus={true}
-        onAddToCart={(productId) => alert(`Added product ${productId} to cart`)}
+        onAddToCart={handleAddToCart}
       >
         <div className="text-sm text-gray-500">
           Free shipping Available
